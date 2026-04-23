@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Auth.csproj" />
+  <Project Path="EFCore/EFCore.csproj" />
+</Solution>
