@@ -1,27 +1,12 @@
-using Auth.DTO;
+using Auth.DTO.RateLimiting;
 using Auth.Enums;
-using Auth.Interfaces;
+using Auth.Interfaces.RateLimiting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Controllers;
 
-/// <summary>
-/// Rate Limiting APIs
-/// </summary>
-/// <remarks>
-/// **6 CRITICAL APIs for Production Rate Limiting:**  
-/// 1. POST /configure - Dynamic rule configuration  
-/// 2. GET /configure - View all rules (visibility)  
-/// 3. PUT /configure/{endpoint} - Update existing rules  
-/// 4. DELETE /configure/{endpoint} - Remove rules  
-/// 5. POST /status - Real-time debugging (is user blocked?)  
-/// 6. POST /reset/{key} - Customer support (instant unblock)  
-/// 7. POST /enable - Emergency global switch  
-///
-/// **Algorithms:** FixedWindow, SlidingWindow, TokenBucket  
-/// **Strategies:** PerIp, PerUser, PerEndpoint, PerIpAndEndpoint, PerUserAndEndpoint
-/// </remarks>
+
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
@@ -37,7 +22,7 @@ public class RateLimitController : ControllerBase
     }
 
     /// <summary>
-    /// Configure rate limit for an endpoint
+    /// Configure rate limit
     /// </summary>
     /// <remarks>
     /// - Sets limit per endpoint  
@@ -227,21 +212,28 @@ public class RateLimitController : ControllerBase
     }
 
     /// <summary>
-    /// Reset rate limit for a specific key
+    /// Reset rate limit for a specific identifier and endpoint
     /// </summary>
     /// <remarks>
-    /// Instant unblock for legitimate users  
+    /// Instant unblock for legitimate users.  
+    /// Use the identifier (IP address or username) and endpoint from the 429 response.
     /// </remarks>
-    /// <param name="key">Rate limit key to reset (IP address, UserID, or composite key) {strategy}:{identifier}:{endpoint}";</param>
+    /// <param name="identifier">The client identifier (IP address, username, etc.) shown in the 429 response</param>
+    /// <param name="endpoint">The endpoint path, e.g. /api/auth/login</param>
+    /// <param name="strategy">The rate limit strategy used for this endpoint</param>
     /// <response code="200">Rate limit reset successfully</response>
     /// <response code="401">Unauthorized</response>
     [HttpPost("reset")]
     //[Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> ResetRateLimit([FromQuery] string key)
+    public async Task<IActionResult> ResetRateLimit(
+        [FromQuery] string identifier,
+        [FromQuery] string endpoint,
+        [FromQuery] RateLimitStrategy strategy = RateLimitStrategy.PerIp)
     {
-        await _rateLimitService.ResetRateLimitAsync(key);
+        await _rateLimitService.ResetRateLimitAsync(identifier, endpoint, strategy);
+        var key = $"ratelimit:{strategy}:{identifier}:{endpoint}";
         _logger.LogInformation("Rate limit reset for key: {Key}", key);
         return Ok(new { message = "Rate limit reset successfully", key });
     }

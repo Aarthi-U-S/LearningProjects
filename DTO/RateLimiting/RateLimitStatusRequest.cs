@@ -1,6 +1,6 @@
 using Auth.RateLimiting;
 
-namespace Auth.DTO;
+namespace Auth.DTO.RateLimiting;
 
 /// <summary>
 /// Request body to check rate limit status (strategy comes from query param)

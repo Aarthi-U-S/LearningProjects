@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Auth.DTO;
+namespace Auth.DTO.Auth;
 
 public class RevokeTokenRequest
 {

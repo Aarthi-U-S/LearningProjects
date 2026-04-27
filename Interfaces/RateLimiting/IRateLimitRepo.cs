@@ -1,6 +1,6 @@
 using EFCore.Models;
 
-namespace Auth.Interfaces;
+namespace Auth.Interfaces.RateLimiting;
 
 /// <summary>
 /// Repository for rate limit data persistence

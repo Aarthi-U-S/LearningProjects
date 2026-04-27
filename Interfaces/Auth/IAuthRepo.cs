@@ -1,6 +1,6 @@
 ﻿using EFCore.Models;
 
-namespace Auth.Interfaces;
+namespace Auth.Interfaces.Auth;
 
 public interface IAuthRepo
 {

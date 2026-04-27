@@ -1,4 +1,4 @@
-﻿namespace Auth.DTO;
+﻿namespace Auth.DTO.Auth;
 
 public class RegisterResponse
 {

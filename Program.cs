@@ -1,9 +1,13 @@
 using Auth.Enums;
 using Auth.Interfaces;
+using Auth.Interfaces.Auth;
+using Auth.Interfaces.RateLimiting;
 using Auth.Models;
 using Auth.RateLimiting;
 using Auth.Repository;
 using Auth.Services;
+using Auth.Services.Auth;
+using Auth.Services.RateLimiting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

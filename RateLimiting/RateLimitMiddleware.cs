@@ -33,11 +33,14 @@ public class RateLimitMiddleware
             return;
         }
 
-        var endpoints = context.Request.Path.Value ?? "/";
-        var query = context.Request.QueryString.Value ?? "";
+        var endpoint = context.Request.Path.Value ?? "/";
 
-        var endpoint = $"{endpoints}{query}";
-        //var endpoint = context.Request.Path.Value ?? "/";
+        // Skip rate limiting for the rate limit management endpoints
+        if (endpoint.StartsWith("/api/ratelimit", StringComparison.OrdinalIgnoreCase))
+        {
+            await _next(context);
+            return;
+        }
         var rule = GetRuleForEndpoint(endpoint);
         var algorithm = rule?.Algorithm ?? _options.DefaultAlgorithm;
         var strategy = rule?.Strategy ?? _options.DefaultStrategy;
@@ -69,7 +72,11 @@ public class RateLimitMiddleware
             await context.Response.WriteAsJsonAsync(new
             {
                 error = "Rate limit exceeded",
-                retryAfter = result.RetryAfter?.TotalSeconds
+                retryAfter = result.RetryAfter?.TotalSeconds,
+                rateLimitKey = key,
+                identifier,
+                endpoint,
+                strategy = strategy.ToString()
             });
 
             _logger.LogWarning("Rate limit exceeded for {Identifier} on {Endpoint}", identifier, endpoint);

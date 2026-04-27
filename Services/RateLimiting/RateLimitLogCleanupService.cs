@@ -1,6 +1,6 @@
-using Auth.Interfaces;
+using Auth.Interfaces.RateLimiting;
 
-namespace Auth.Services;
+namespace Auth.Services.RateLimiting;
 
 /// <summary>
 /// Background service to periodically clean up old rate limit logs

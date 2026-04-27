@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using EFCore.Models;
 
-namespace Auth.Services;
+namespace Auth.Services.Auth;
 
 public interface IJwtTokenService
 {

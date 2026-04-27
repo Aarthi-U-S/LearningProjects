@@ -1,4 +1,4 @@
-namespace Auth.DTO;
+namespace Auth.DTO.RateLimiting;
 
 /// <summary>
 /// Rate limit status response

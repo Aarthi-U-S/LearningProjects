@@ -1,6 +1,6 @@
 using Auth.Enums;
 
-namespace Auth.DTO;
+namespace Auth.DTO.RateLimiting;
 
 public class RateLimitConfigRequest
 {

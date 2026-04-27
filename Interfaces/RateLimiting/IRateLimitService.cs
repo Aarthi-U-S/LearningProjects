@@ -1,7 +1,7 @@
-using Auth.DTO;
+using Auth.DTO.RateLimiting;
 using Auth.Enums;
 
-namespace Auth.Interfaces;
+namespace Auth.Interfaces.RateLimiting;
 
 public interface IRateLimitService
 {
@@ -15,7 +15,7 @@ public interface IRateLimitService
 
     Task<RateLimitStatusResponse> CheckStatusAsync(string identifier, string endpoint, RateLimitStrategy strategy);
 
-    Task ResetRateLimitAsync(string key);
+    Task ResetRateLimitAsync(string identifier, string endpoint, RateLimitStrategy strategy);
 
     Task SetEnabledAsync(bool enabled);
 }

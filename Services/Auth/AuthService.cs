@@ -1,8 +1,8 @@
-﻿using Auth.DTO;
-using Auth.Interfaces;
+﻿using Auth.DTO.Auth;
+using Auth.Interfaces.Auth;
 using EFCore.Models;
 
-namespace Auth.Services;
+namespace Auth.Services.Auth;
 
 public class AuthService : IAuthService
 {

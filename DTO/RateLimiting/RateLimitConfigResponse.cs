@@ -1,4 +1,4 @@
-namespace Auth.DTO;
+namespace Auth.DTO.RateLimiting;
 
 public class RateLimitConfigResponse
 {

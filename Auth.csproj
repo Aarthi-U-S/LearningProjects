@@ -39,9 +39,4 @@
     <ProjectReference Include="EFCore\EFCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Guide\" />
-  </ItemGroup>
-
 </Project>

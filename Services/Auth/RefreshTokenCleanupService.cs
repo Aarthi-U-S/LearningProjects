@@ -1,6 +1,6 @@
-using Auth.Interfaces;
+using Auth.Interfaces.Auth;
 
-namespace Auth.Services;
+namespace Auth.Services.Auth;
 
 public class RefreshTokenCleanupService : BackgroundService
 {
